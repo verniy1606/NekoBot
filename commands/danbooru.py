@@ -59,7 +59,7 @@ class DanbooruCommand(commands.Cog):
 
             danbooru_url = f'https://danbooru.donmai.us/posts/{id}'
             
-            if rating == 'q' or rating == 'e': # rating:questionable or rating:explicit
+            if rating in {'q', 'e'}: # rating:questionable or rating:explicit
                 logging.info(f'The image is too ecchi !: {danbooru_url}')
 
                 await ctx.respond(f'This post is too ecchi for this bot ! Try again to fetch another image')
