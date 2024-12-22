@@ -1,4 +1,5 @@
 import logging
+import asyncio
 
 import discord
 from discord.ext import commands
@@ -8,10 +9,10 @@ from pybooru import Danbooru
 class DanbooruCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.danbooru = Danbooru('danbooru')
+        self.danbo = Danbooru('danbooru')
 
     @commands.slash_command(name='danbooru', description='Pick random one image !')
-    async def danbooru(
+    async def danbo(
         self, 
         ctx: discord.ApplicationContext, 
         index: discord.Option(
@@ -34,7 +35,7 @@ class DanbooruCommand(commands.Cog):
         tag = ''
 
         if searchtype == 'artist':
-            artists = self.danbooru.artist_list(index)
+            artists = await asyncio.to_thread(self.danbo.artist_list, index)
             for artist in artists:
                 tag = artist['name']
         elif searchtype == 'global':
@@ -42,7 +43,7 @@ class DanbooruCommand(commands.Cog):
 
         logging.info(f'Searching for *{tag}*...')
 
-        posts = self.danbooru.post_list(limit=1, tags=tag, random=True)
+        posts = await asyncio.to_thread(self.danbo.post_list, limit=1, tags=tag, random=True)
 
         if not posts:
             logging.info(f'Could not find the tag *{tag}* !')
