@@ -41,27 +41,31 @@ class DanbooruCommand(commands.Cog):
         elif searchtype == 'global':
             tag = index
 
-        logging.info(tag)
+        logging.info(f'Searching for {tag}...')
 
         posts = self.danbooru.post_list(limit=1, tags=tag, random=True)
-        logging.info(f'posts: {posts}')
 
         if not posts:
             await ctx.respond(f'Could not find the tag *{tag}*...')
             return
 
         for post in posts:
-            result = post.get('file_url', 'Could not fetch the file...')
+            file_url = post.get('file_url', 'Could not fetch the file...')
             rating = post.get('rating', '?')
             source = post.get('source', '?')
+            id = post.get('id', '?')
+            
+            danbooru_url = f'https://danbooru.donmai.us/posts/{id}'
             
             if rating == 'q' or rating == 'e': # rating:questionable or rating:explicit
-                await ctx.respond(f'This post is too ecchi for this bot ! try again to fetch another image')
+                logging.info(f'{danbooru_url} is too ecchi !')
+
+                await ctx.respond(f'This post is too ecchi for this bot ! Try again to fetch another image')
                 return
 
-            await ctx.respond(f'Here we go ! *{tag}* <:521089271:1320383029876883557> \n<https://danbooru.donmai.us/posts/{post['id']}> \n{result} \n[source](<{source}>)')
+            await ctx.respond(f'Here we go ! *{tag}* <:521089271:1320383029876883557> \n<{danbooru_url}> \n{file_url} \n[source](<{source}>)')
 
-            logging.info(result)
+            logging.info(f'The image sent !: {danbooru_url}')
 
 def setup(bot):
     bot.add_cog(DanbooruCommand(bot))
