@@ -1,9 +1,9 @@
 import logging
 
 import discord
-import google.generativeai as genai
-
 from discord.ext import commands
+
+import google.generativeai as genai
 
 class GeminiCommand(commands.Cog):
     def __init__(self, bot):
@@ -16,6 +16,7 @@ class GeminiCommand(commands.Cog):
         await ctx.defer()
         
         message = await self.chat.send_message_async(content)
+        logging.info(f'{ctx.user} said "{content}": Gemini replied "{message.text}"')
         await ctx.respond(message.text)
 
 def setup(bot):
