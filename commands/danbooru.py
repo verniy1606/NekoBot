@@ -66,7 +66,7 @@ class DanbooruCommand(commands.Cog):
 
             await ctx.respond(f'Here we go ! *{tag}* <:521089271:1320383029876883557> \n<{danbooru_url}> \n{file_url}')
 
-            logging.info(f'The image sent !: {danbooru_url}')
+            logging.info(f'The image was sent !: {danbooru_url}')
 
 def setup(bot):
     bot.add_cog(DanbooruCommand(bot))
