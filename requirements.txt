@@ -1,3 +1,2 @@
 google-generativeai
 py-cord
-Pybooru

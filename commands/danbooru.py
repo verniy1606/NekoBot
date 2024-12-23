@@ -1,9 +1,4 @@
 import logging
-import asyncio
-
-from http.client import RemoteDisconnected
-from pybooru import PybooruHTTPError
-from requests.exceptions import ConnectionError
 
 import discord
 from discord.ext import commands
