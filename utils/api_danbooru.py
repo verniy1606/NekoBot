@@ -7,6 +7,10 @@ class DanbooruClient:
     def __init__(self, base_url='https://danbooru.donmai.us'):
         self.base_url = base_url
         self.http = httpx.AsyncClient(follow_redirects=True)
+    
+    def __del__(self):
+        # self.http.aclose()
+        return
 
     async def get_http(self, api_url: str, params: list) -> list:
         try:
@@ -25,7 +29,7 @@ class DanbooruClient:
             logging.error(f'An error occured during the request !: {e}')
             return None
 
-    async def get_artist_from_url(self, artist_url: str) -> list:
+    async def get_artist_by_url(self, artist_url: str) -> list:
         api_url = f'{self.base_url}/artists.json'
 
         params = {
@@ -51,7 +55,7 @@ if __name__ == '__main__':
     async def test():
         client = DanbooruClient()
 
-        artist = await client.get_artist_from_url('https://twitter.com/ramunezake')
+        artist = await client.get_artist_by_url('https://twitter.com/ramunezake')
         posts = await client.get_posts_by_tag(tags='nekomimi', random=True)
 
         if not artist:

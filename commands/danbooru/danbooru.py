@@ -3,13 +3,9 @@ import logging
 import discord
 from discord.ext import commands
 
-from utils.api_danbooru import DanbooruClient
-
 class DanbooruCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # self.danbo = Danbooru('danbooru')
-        self.danbo = DanbooruClient()
 
     @commands.slash_command(name='danbooru', description='Pick random one image !')
     async def danbooru(
@@ -21,7 +17,7 @@ class DanbooruCommand(commands.Cog):
 
         # Search the image
         logging.info(f'Searching for *{tag}*...')
-        posts = await self.danbo.get_posts_by_tag(tag, limit=5, random=True)
+        posts = await self.bot.danbo.get_posts_by_tag(tag, limit=5, random=True)
 
         if not posts:
             logging.info(f'Could not find the tag *{tag}* !')
