@@ -7,8 +7,8 @@ class DanbooruCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.slash_command(name='danbooru', description='Pick random one image !')
-    async def danbooru(
+    @commands.slash_command(name='danbo_random', description='Pick random one image !')
+    async def danbo_random(
         self,
         ctx: discord.ApplicationContext,
         tag: str
