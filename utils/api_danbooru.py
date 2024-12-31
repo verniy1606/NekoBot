@@ -37,6 +37,10 @@ class DanbooruClient:
         }
 
         result = await self.get_http(api_url, params)
+
+        if not result: 
+            return []
+        
         return result[0] # first artist
         
     async def get_posts_by_tag(self, tags: str, limit: int = 5, random: bool = False) -> list:
