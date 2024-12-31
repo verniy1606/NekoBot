@@ -5,8 +5,6 @@ from pathlib import Path
 import discord
 import google.generativeai as genai
 
-from utils.api_danbooru import DanbooruClient
-
 GEMINI_TOKEN = os.getenv("GEMINI_TOKEN")
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
@@ -22,8 +20,6 @@ logging.basicConfig(
 genai.configure(api_key=GEMINI_TOKEN)
 
 bot = discord.Bot()
-bot.danbo = DanbooruClient()
-
 command_path = Path('./commands')
 
 for filepath in command_path.rglob('*.py'):

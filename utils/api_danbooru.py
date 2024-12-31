@@ -50,6 +50,8 @@ class DanbooruClient:
 
         result = await self.get_http(api_url, params)
         return result
+    
+danbo_global = DanbooruClient()
 
 if __name__ == '__main__':
     async def test():

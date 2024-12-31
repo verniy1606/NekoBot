@@ -3,7 +3,9 @@ import logging
 import discord
 from discord.ext import commands
 
-class DanbooruCommand(commands.Cog):
+from utils.api_danbooru import danbo_global
+
+class DanboRandomCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -14,10 +16,9 @@ class DanbooruCommand(commands.Cog):
         tag: str
     ):
         await ctx.defer()
-
         # Search the image
         logging.info(f'Searching for *{tag}*...')
-        posts = await self.bot.danbo.get_posts_by_tag(tag, limit=5, random=True)
+        posts = await danbo_global.get_posts_by_tag(tag, limit=5, random=True)
 
         if not posts:
             logging.info(f'Could not find the tag *{tag}* !')
@@ -50,4 +51,4 @@ class DanbooruCommand(commands.Cog):
             await ctx.respond(f'This post is too ecchi for this bot ! Try again to fetch another image')
 
 def setup(bot):
-    bot.add_cog(DanbooruCommand(bot))
+    bot.add_cog(DanboRandomCommand(bot))
