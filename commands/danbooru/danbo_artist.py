@@ -29,7 +29,6 @@ class DanboArtistCommand(commands.Cog):
         )
 
         await ctx.respond(f'Here is the result ! <:521089271:1320383029876883557>', embed = embed)
-        return
 
 def setup(bot):
     bot.add_cog(DanboArtistCommand(bot))
