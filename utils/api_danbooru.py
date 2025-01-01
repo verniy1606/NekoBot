@@ -1,6 +1,5 @@
 import logging
 import httpx
-import urllib
 import asyncio
 
 from dataclasses import dataclass
@@ -29,7 +28,7 @@ class DanboCommentary:
     description: str
 
 class DanbooruClient:
-    def __init__(self, base_url='https://danbooru.donmai.us'):
+    def __init__(self, base_url = 'https://danbooru.donmai.us'):
         self.base_url = base_url
         self.http = httpx.AsyncClient(follow_redirects = True)
     
@@ -39,7 +38,7 @@ class DanbooruClient:
 
     async def get_http(self, api_url: str, params: list = None) -> list:
         try:
-            response = await self.http.get(api_url, params=params)
+            response = await self.http.get(api_url, params = params)
             response.raise_for_status()
 
             data = response.json()
@@ -50,9 +49,6 @@ class DanbooruClient:
             
             return data
         
-        # except httpx.RequestException as e:
-        #     logging.error(f'A RequestException occured during the request !: {e}')
-        #     return None
         except httpx.HTTPStatusError as e:
             logging.error(f'An HTTPStatusError occured during the request !: {e}')
             return None
@@ -114,10 +110,10 @@ class DanbooruClient:
         posts: list[DanboPost] = []
         
         for post in result:
-            id=post.get('id')
-            rating=post.get('rating', '?')
-            file_url=post.get('file_url', 'Requires a gold account to see this post, so we could not fetch the file...')
-            tag_string_artist=post.get('tag_string_artist', '?')
+            id = post.get('id')
+            rating = post.get('rating', '?')
+            file_url = post.get('file_url', 'Requires a gold account to see this post, so we could not fetch the file...')
+            tag_string_artist = post.get('tag_string_artist', '?')
             danbo_url = f'{self.base_url}/posts/{id}'
 
             instance = DanboPost(id = id, rating = rating, file_url = file_url, tag_string_artist = tag_string_artist, danbo_url = danbo_url)
@@ -132,7 +128,7 @@ if __name__ == '__main__':
         client = DanbooruClient()
 
         artists = await client.get_artists('')
-        posts = await client.get_posts_by_tag(tags='nekomimi', random=True)
+        posts = await client.get_posts_by_tag(tags='nekomimi', random = True)
 
         if not posts:
             print('Posts is null !')
